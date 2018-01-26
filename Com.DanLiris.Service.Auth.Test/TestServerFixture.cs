@@ -24,11 +24,25 @@ namespace Com.DanLiris.Service.Auth.Test
 
         public TestServerFixture()
         {
+            /*
             string projectPath = AppDomain.CurrentDomain.BaseDirectory.Split(new String[] { @"bin\" }, StringSplitOptions.None)[0];
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(projectPath)
                 .AddJsonFile("appsettings.json")
                 .Build();
+            */
+
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("Authority", "http://localhost:5000"),
+                    new KeyValuePair<string, string>("ClientId", "dl-test"),
+                    new KeyValuePair<string, string>("Secret", "UNITTEST"),
+                    new KeyValuePair<string, string>("ASPNETCORE_ENVIRONMENT", "Test")
+                })
+                .Build();
+
 
             var builder = new WebHostBuilder()
                 .UseConfiguration(configuration)
