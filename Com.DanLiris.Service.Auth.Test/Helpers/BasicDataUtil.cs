@@ -20,7 +20,7 @@ namespace Com.DanLiris.Service.Auth.Test.Helpers
             Service.Username = "Unit Test";
         }
 
-        public abstract TModel GetNewData();
+        public abstract TModel GetNewData(string Type);
         public abstract TModel GetTestData();
     }
 }

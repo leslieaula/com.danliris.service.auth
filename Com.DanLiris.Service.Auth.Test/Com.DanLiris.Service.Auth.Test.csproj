@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Com.Danliris.Service.Auth.Lib\Com.DanLiris.Service.Auth.Lib.csproj" />
-    <ProjectReference Include="..\Com.Danliris.Service.Auth.WebApi\Com.DanLiris.Service.Auth.WebApi.csproj" />
+    <ProjectReference Include="..\Com.DanLiris.Service.Auth.Lib\Com.DanLiris.Service.Auth.Lib.csproj" />
+    <ProjectReference Include="..\Com.DanLiris.Service.Auth.WebApi\Com.DanLiris.Service.Auth.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

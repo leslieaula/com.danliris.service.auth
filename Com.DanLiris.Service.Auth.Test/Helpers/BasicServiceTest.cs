@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Com.DanLiris.Service.Auth.Test.Helpers
 {
-    public abstract class BasicServiceTest<TService, TDbContext, TModel, TDataUtil>
+    public abstract class BasicServiceTest<TDbContext, TService, TModel, TDataUtil>
         where TDbContext : DbContext
         where TService : BasicService<TDbContext, TModel>
         where TModel : StandardEntity, IValidatableObject, new()
@@ -49,7 +49,7 @@ namespace Com.DanLiris.Service.Auth.Test.Helpers
         [Fact]
         public void Should_Success_Create_Data()
         {
-            TModel Data = DataUtil.GetNewData();
+            TModel Data = DataUtil.GetNewData(General.SERVICE_TEST_DATA);
             int AffectedRows = this.Service.CreateData(Data);
 
             Assert.True(AffectedRows > 0);

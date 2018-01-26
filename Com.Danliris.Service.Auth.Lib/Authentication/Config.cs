@@ -35,33 +35,33 @@ namespace Com.DanLiris.Service.Auth.Lib.Authentication
                 new Client
                 {
                     ClientId = ClientId,
-
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
                     ClientSecrets =
                     {
                         new Secret(Secret.Sha256())
                     },
-
-                    AllowedScopes = { "com.danliris.service" }
+                    AllowedScopes = { "com.danliris.service" },
+                    AccessTokenLifetime = 3600 * 24 * 30,
+                    IdentityTokenLifetime = 3600 * 24 * 30
                 }
             };
         }
 
-        public static List<TestUser> GetUsers()
+        public static List<TestUser> GetTestUsers()
         {
             return new List<TestUser>
             {
                 new TestUser
                 {
+                    SubjectId = "Test",
                     Username = "Test",
                     Password = "Test",
                     Claims = new List<Claim>
                     {
-                        new Claim("name", "JamesTest"),
+                        new Claim("name", "Test"),
                         new Claim("username", "Test"),
                         new Claim("profile", "{}"),
-                        new Claim("permission", "{{")
+                        new Claim("permission", "{}")
                     }
                 }
             };

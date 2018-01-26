@@ -12,8 +12,8 @@
       "commandName": "Project",
       "launchUrl": "api/values",
       "environmentVariables": {
-        "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=com.danliris.db.auth;Trusted_Connection=True;",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "DefaultConnection": "Server=localhost,1450;Database=com.danliris.db.auth.test;User=sa;password=Standar123.;MultipleActiveResultSets=true;",
+        "ASPNETCORE_ENVIRONMENT": "Test"
       }
     },
     "Com.Danliris.Service.Auth.WebApi": {

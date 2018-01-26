@@ -22,7 +22,7 @@ namespace Com.DanLiris.Service.Auth.Lib.ViewModels
             if (this._id.Equals(0) && string.IsNullOrWhiteSpace(this.password))
                 yield return new ValidationResult("Password is required", new List<string> { "password" });
 
-            if (this.profile.Equals(null) || string.IsNullOrWhiteSpace(this.profile.firstname))
+            if (this.profile == null || string.IsNullOrWhiteSpace(this.profile.firstname))
                 yield return new ValidationResult("{ firstname: 'First Name is required' }", new List<string> { "profile" });
 
             string accountRoleError = "[";

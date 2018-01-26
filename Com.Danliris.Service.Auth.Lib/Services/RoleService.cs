@@ -1,7 +1,6 @@
 ﻿using Com.DanLiris.Service.Auth.Lib.Helpers;
 using Com.DanLiris.Service.Auth.Lib.Models;
 using Com.DanLiris.Service.Auth.Lib.ViewModels;
-using Com.DanLiris.Service.Auth.Lib.Helpers;
 using Com.Moonlay.NetCore.Lib;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Com.DanLiris.Service.Auth.Lib.Interfaces;
 

@@ -4,7 +4,7 @@ namespace Com.DanLiris.Service.Auth.Test.DataUtils
 {
     public class PermissionDataUtil
     {
-        public Permission GetNewData()
+        public Permission GetTestData()
         {
             Permission TestData = new Permission
             {

@@ -1,14 +1,15 @@
 ﻿using Com.DanLiris.Service.Auth.Lib;
 using Com.DanLiris.Service.Auth.Lib.Models;
 using Com.DanLiris.Service.Auth.Lib.Services;
+using Com.DanLiris.Service.Auth.Lib.ViewModels;
 using Com.DanLiris.Service.Auth.Test.Helpers;
+using Com.DanLiris.Service.Auth.Test.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Com.DanLiris.Service.Auth.Test.DataUtils
 {
-    public class AccountDataUtil : BasicDataUtil<AuthDbContext, AccountService, Account>
+    public class AccountDataUtil : BasicDataUtil<AuthDbContext, AccountService, Account>, IEmptyData<AccountViewModel>
     {
         public AccountProfileDataUtil AccountProfileDataUtil { get; set; }
         public RoleDataUtil RoleDataUtil { get; set; }
@@ -19,19 +20,25 @@ namespace Com.DanLiris.Service.Auth.Test.DataUtils
             this.RoleDataUtil = roleDataUtil;
         }
 
-        public override Account GetNewData()
+        public override Account GetNewData(string Type)
         {
             string guid = Guid.NewGuid().ToString();
             Role role = RoleDataUtil.GetTestData();
 
-            AccountRole accountRole = new AccountRole { RoleId = role.Id };
+            AccountRole accountRole = null;
+
+            switch (Type)
+            {
+                case General.CONTROLLER_TEST_DATA: accountRole = new AccountRole { RoleId = role.Id, Role = role }; break;
+                case General.SERVICE_TEST_DATA: accountRole = new AccountRole { RoleId = role.Id }; break;
+            }
 
             Account TestData = new Account
             {
                 Username = guid,
                 Password = "Password",
                 IsLocked = false,
-                AccountProfile = AccountProfileDataUtil.GetNewData(),
+                AccountProfile = AccountProfileDataUtil.GetTestData(),
                 AccountRoles = new List<AccountRole> { accountRole }
             };
 
@@ -40,16 +47,21 @@ namespace Com.DanLiris.Service.Auth.Test.DataUtils
 
         public override Account GetTestData()
         {
-            Account Data = GetNewData();
-            Account TestData = this.Service.DbSet.FirstOrDefault(account => account.Username.Equals(Data.Username));
+            Account Data = GetNewData(General.SERVICE_TEST_DATA);
 
-            if (TestData != null)
-                return TestData;
-            else
-            {
-                this.Service.CreateData(Data);
-                return Data;
-            }
+            this.Service.CreateData(Data);
+            return Data;
+        }
+
+        public AccountViewModel GetEmptyData()
+        {
+            AccountViewModel Data = new AccountViewModel();
+
+            Data.username = string.Empty;
+            Data.password = string.Empty;
+            Data.roles = new List<RoleViewModel> { new RoleViewModel() };
+
+            return Data;
         }
     }
 }

@@ -3,11 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.DanLiris.Service.Auth.WebApi", "Com.Danliris.Service.Auth.WebApi\Com.DanLiris.Service.Auth.WebApi.csproj", "{B4CD0C97-CA5A-4175-B1BB-0BA4D71B7345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.DanLiris.Service.Auth.WebApi", "Com.DanLiris.Service.Auth.WebApi\Com.DanLiris.Service.Auth.WebApi.csproj", "{B4CD0C97-CA5A-4175-B1BB-0BA4D71B7345}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.DanLiris.Service.Auth.Lib", "Com.Danliris.Service.Auth.Lib\Com.DanLiris.Service.Auth.Lib.csproj", "{6EF2ADB7-59C5-4DBE-930E-E230A9E2A570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.DanLiris.Service.Auth.Lib", "Com.DanLiris.Service.Auth.Lib\Com.DanLiris.Service.Auth.Lib.csproj", "{6EF2ADB7-59C5-4DBE-930E-E230A9E2A570}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.DanLiris.Service.Auth.Test", "Com.Danliris.Service.Auth.Test\Com.DanLiris.Service.Auth.Test.csproj", "{DAD70F3B-5E1A-4C0D-AC6F-78597C9411D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Com.DanLiris.Service.Auth.Test", "Com.DanLiris.Service.Auth.Test\Com.DanLiris.Service.Auth.Test.csproj", "{DAD70F3B-5E1A-4C0D-AC6F-78597C9411D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DF63E9A6-CA3C-454E-B818-5C8557F733EB}"
+	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{0FE1BCC3-99DA-4AA0-974E-15EAC0C29D73}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose.test.yml = docker-compose.test.yml
+		Dockerfile.test = Dockerfile.test
+		Dockerfile.test.build = Dockerfile.test.build
+		Dockerfile.test.build.sh = Dockerfile.test.build.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

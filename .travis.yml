@@ -1,0 +1,34 @@
+sudo: false
+dist: trusty
+language: csharp
+mono: none
+dotnet: 2.0.0
+solution: Com.DanLiris.Service.Auth.sln
+services:
+    - docker
+env:
+    - ASPNETCORE_ENVIRONMENT=Test
+
+before_install:
+    - bash Dockerfile.test.build.sh
+install: true
+
+before_script:
+    - docker-compose -f docker-compose.test.yml up -d
+    - sleep 60
+
+script:
+    - dotnet restore Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
+    - dotnet build Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
+    - dotnet test Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
+
+after_success:
+    - if [ "$TRAVIS_PULL_REQUEST" == false ]; then
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      
+      docker tag com-danliris-service-auth-webapi:test jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.$TRAVIS_BUILD_NUMBER;
+      docker push jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.$TRAVIS_BUILD_NUMBER;
+
+      docker tag com-danliris-service-auth-webapi:test jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.latest;
+      docker push jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.latest;
+      fi

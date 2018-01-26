@@ -82,18 +82,50 @@ namespace Com.DanLiris.Service.Auth.WebApi.Helpers
             }
         }
 
-        [HttpPut("{_id}")]
-        public IActionResult Put([FromRoute] int _id, [FromBody] TViewModel ViewModel)
+        [HttpPost]
+        public IActionResult Post([FromBody] TViewModel ViewModel)
         {
             try
             {
                 this.ValidateViewModel(ViewModel);
                 this.Service.Username = User.Identity.Name;
 
+                TModel model = Service.MapToModel(ViewModel);
+                Service.CreateData(model);
+
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE)
+                    .Ok();
+                return Created(String.Concat(HttpContext.Request.Path, "/", model.Id), Result);
+            }
+            catch (ServiceValidationExeption e)
+            {
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.BAD_REQUEST_MESSAGE)
+                    .Fail(e);
+                return BadRequest(Result);
+            }
+            catch (Exception e)
+            {
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+                    .Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
+            }
+        }
+
+        [HttpPut("{_id}")]
+        public IActionResult Put([FromRoute] int _id, [FromBody] TViewModel ViewModel)
+        {
+            try
+            {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
+
+                this.ValidateViewModel(ViewModel);
+                this.Service.Username = User.Identity.Name;
 
                 if (_id != ViewModel._id)
                 {
@@ -120,8 +152,8 @@ namespace Com.DanLiris.Service.Auth.WebApi.Helpers
                 if (!Service.IsExists(_id))
                 {
                     Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE)
-                    .Fail();
+                        new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE)
+                        .Fail();
                     return NotFound(Result);
                 }
                 else
@@ -141,48 +173,26 @@ namespace Com.DanLiris.Service.Auth.WebApi.Helpers
             }
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] TViewModel ViewModel)
-        {
-            try
-            {
-                this.ValidateViewModel(ViewModel);
-                this.Service.Username = User.Identity.Name;
-
-                TModel model = Service.MapToModel(ViewModel);
-                Service.CreateData(model);
-
-                Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE)
-                    .Ok();
-                return Created(String.Concat(HttpContext.Request.Path, "/", ViewModel._id), Result);
-            }
-            catch (ServiceValidationExeption e)
-            {
-                Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.BAD_REQUEST_MESSAGE)
-                    .Fail(e);
-                return BadRequest(Result);
-            }
-            catch (Exception e)
-            {
-                Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
-                    .Fail();
-                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
-            }
-        }
-
         [HttpDelete("{_id}")]
         public IActionResult Delete([FromRoute] int _id)
         {
             try
             {
-                this.Service.Username = User.Identity.Name;
-
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
+                }
+
+                this.Service.Username = User.Identity.Name;  
+
+                var exists = Service.IsExists(_id);
+
+                if (exists == false)
+                {
+                    Dictionary<string, object> ResultNotFound =
+                        new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE)
+                        .Fail();
+                    return NotFound(ResultNotFound);
                 }
 
                 Service.DeleteData(_id);

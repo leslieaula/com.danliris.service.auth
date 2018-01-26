@@ -1,12 +1,8 @@
-﻿using Com.DanLiris.Service.Auth.Lib.Models;
-using Com.DanLiris.Service.Auth.Lib.Services;
-using IdentityModel;
+﻿using Com.DanLiris.Service.Auth.Lib.Services;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Com.DanLiris.Service.Auth.Lib.Authentication

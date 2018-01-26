@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  com.danliris.service.auth.webapi:
+    image: com-danliris-service-auth-webapi:test
+    environment:
+      - Authority=http://localhost
+      - ClientId=dl-test
+      - Secret=DLUNITTEST
+      - ASPNETCORE_ENVIRONMENT=Test
+      - DefaultConnection=Server=mssql;Database=com.danliris.db.auth;User=sa;password=Standar123.;MultipleActiveResultSets=true
+    ports:
+      - "5000:80"
+
+  mssql:
+    image: microsoft/mssql-server-linux:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Standar123.
+      - MSSQL_PID=Developer
+    ports:
+      - "1401:1433"

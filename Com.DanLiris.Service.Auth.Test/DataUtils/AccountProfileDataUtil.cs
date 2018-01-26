@@ -4,7 +4,7 @@ namespace Com.DanLiris.Service.Auth.Test.DataUtils
 {
     public class AccountProfileDataUtil
     {
-        public AccountProfile GetNewData()
+        public AccountProfile GetTestData()
         {
             AccountProfile TestData = new AccountProfile
             {

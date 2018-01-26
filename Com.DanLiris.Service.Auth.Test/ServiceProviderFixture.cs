@@ -33,8 +33,8 @@ namespace Com.DanLiris.Service.Auth.Test
                 .AddTransient<RoleService>(provider => new RoleService(provider))
                 .AddTransient<AccountDataUtil>()
                 .AddTransient<AccountProfileDataUtil>()
-                .AddTransient<RoleDataUtil>()
                 .AddTransient<PermissionDataUtil>()
+                .AddTransient<RoleDataUtil>()
                 .BuildServiceProvider();
 
             AuthDbContext dbContext = ServiceProvider.GetService<AuthDbContext>();

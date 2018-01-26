@@ -11,8 +11,7 @@ using IdentityServer4.AccessTokenValidation;
 using IdentityModel;
 using Com.DanLiris.Service.Auth.Lib.Authentication;
 using IdentityServer4.Services;
-using IdentityServer4.Test;
-using System.Collections.Generic;
+using System;
 
 namespace Com.DanLiris.Service.Auth.WebApi
 {
@@ -29,10 +28,10 @@ namespace Com.DanLiris.Service.Auth.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection") ?? Configuration["DefaultConnection"];
-            string authority = Configuration["Authority"];
-            string clientId = Configuration["ClientId"];
-            string secret = Configuration["Secret"];
-            string env = Configuration["ASPNETCORE_ENVIRONMENT"];
+            string authority = Configuration.GetConnectionString("Authority") ?? Configuration["Authority"];
+            string clientId = Configuration.GetConnectionString("ClientId") ?? Configuration["ClientId"];
+            string secret = Configuration.GetConnectionString("Secret") ?? Configuration["Secret"];
+            string env = Configuration.GetConnectionString("ASPNETCORE_ENVIRONMENT") ?? Configuration["ASPNETCORE_ENVIRONMENT"];
 
             Config.Authority = authority;
             Config.Secret = secret;
@@ -55,12 +54,24 @@ namespace Com.DanLiris.Service.Auth.WebApi
                    options.DefaultApiVersion = new ApiVersion(1, 1);
                });
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients())
-                .AddProfileService<ProfileService>();
+            if (env.Equals("Test"))
+            {
+                services.AddIdentityServer()
+                    .AddDeveloperSigningCredential()
+                    .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                    .AddInMemoryApiResources(Config.GetApiResources())
+                    .AddInMemoryClients(Config.GetClients())
+                    .AddTestUsers(Config.GetTestUsers());
+            }
+            else
+            {
+                services.AddIdentityServer()
+                    .AddDeveloperSigningCredential()
+                    .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                    .AddInMemoryApiResources(Config.GetApiResources())
+                    .AddInMemoryClients(Config.GetClients())
+                    .AddProfileService<ProfileService>();
+            }
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
@@ -74,13 +85,14 @@ namespace Com.DanLiris.Service.Auth.WebApi
 
             services.AddCors(o => o.AddPolicy("AuthPolicy", builder =>
             {
-                builder.WithOrigins("http://localhost:9000")
+                builder.AllowAnyOrigin()
                        .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                        .AllowAnyHeader();
             }));
 
             services
                 .AddMvcCore()
+                .AddAuthorization()
                 .AddJsonFormatters();
         }
 
@@ -100,6 +112,7 @@ namespace Com.DanLiris.Service.Auth.WebApi
 
             app.UseCors("AuthPolicy");
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
