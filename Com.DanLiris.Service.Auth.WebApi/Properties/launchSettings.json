@@ -1,0 +1,29 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:52569/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "Project",
+      "launchUrl": "api/values",
+      "environmentVariables": {
+        "DefaultConnection": "Server=localhost,1450;Database=com.danliris.db.auth.test;User=sa;password=Standar123.;MultipleActiveResultSets=true;",
+        "ASPNETCORE_ENVIRONMENT": "Test"
+      }
+    },
+    "Com.Danliris.Service.Auth.WebApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/values",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:52570/"
+    }
+  }
+}

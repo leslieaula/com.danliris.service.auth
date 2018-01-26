@@ -1,0 +1,10 @@
+FROM microsoft/aspnetcore-build:2.0.2
+WORKDIR /app
+
+COPY Com.DanLiris.Service.Auth.Lib/*.csproj ./Com.DanLiris.Service.Auth.Lib/
+COPY Com.DanLiris.Service.Auth.WebApi/*.csproj ./Com.DanLiris.Service.Auth.WebApi/
+RUN dotnet restore ./Com.DanLiris.Service.Auth.WebApi/
+
+COPY Com.DanLiris.Service.Auth.Lib/. ./Com.DanLiris.Service.Auth.Lib/
+COPY Com.DanLiris.Service.Auth.WebApi/. ./Com.DanLiris.Service.Auth.WebApi/
+RUN dotnet publish ./Com.DanLiris.Service.Auth.WebApi/ --output /out/ --configuration Release
