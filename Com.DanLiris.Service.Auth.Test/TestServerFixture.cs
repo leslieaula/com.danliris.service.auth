@@ -40,7 +40,7 @@ namespace Com.DanLiris.Service.Auth.Test
                     new KeyValuePair<string, string>("ClientId", "dl-test"),
                     new KeyValuePair<string, string>("Secret", "UNITTEST"),
                     new KeyValuePair<string, string>("ASPNETCORE_ENVIRONMENT", "Test"),
-                    new KeyValuePair<string, string>("DefaultConnection", "Server=localhost,1401;Database=com.danliris.db.auth.test;User=sa;password=Standar123.;MultipleActiveResultSets=true;")
+                    new KeyValuePair<string, string>("DefaultConnection", "Server=localhost,1401;Database=com.danliris.db.auth.controller.test;User=sa;password=Standar123.;MultipleActiveResultSets=true;")
                 })
                 .Build();
 
