@@ -6,7 +6,7 @@ services:
     environment:
       - Authority=http://localhost
       - ClientId=dl-test
-      - Secret=DLUNITTEST
+      - Secret=UNITTEST
       - ASPNETCORE_ENVIRONMENT=Test
       - DefaultConnection=Server=mssql;Database=com.danliris.db.auth;User=sa;password=Standar123.;MultipleActiveResultSets=true
     ports:
