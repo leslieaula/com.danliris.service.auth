@@ -1,7 +1,7 @@
 sudo: false
 dist: trusty
 language: csharp
-mono: latest
+mono: none
 dotnet: 2.0.0
 solution: Com.DanLiris.Service.Auth.sln
 services:
@@ -21,10 +21,6 @@ script:
     - dotnet restore Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
     - dotnet build Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
     - dotnet test Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
-    - nuget install OpenCover -ExcludeVersion
-    - nuget install coveralls.net -ExcludeVersion
-    - mono OpenCover/tools/OpenCover.Console.exe -target:"dotnet" -targetargs:"test .\Com.DanLiris.Service.Auth.Test\Com.DanLiris.Service.Auth.Test.csproj --no-build -c Release /p:codecov=true" -register:user -oldstyle -safemode:off -returntargetcode -output:coverage.xml -filter:+[*]*
-    - mono coveralls.net/tools/csmacnz.Coveralls.exe --opencover -i coverage.xml
 
 after_success:
     - if [ "$TRAVIS_PULL_REQUEST" == false ]; then
