@@ -21,7 +21,6 @@ script:
     - dotnet restore Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
     - dotnet build Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
     - dotnet test Com.DanLiris.Service.Auth.Test/Com.DanLiris.Service.Auth.Test.csproj
-    - bash coverage.sh
 
 after_success:
     - if [ "$TRAVIS_PULL_REQUEST" == false ]; then
