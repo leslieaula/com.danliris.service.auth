@@ -27,8 +27,8 @@ after_success:
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       
       docker tag com-danliris-service-auth-webapi:test jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.$TRAVIS_BUILD_NUMBER;
-      docker push jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.$TRAVIS_BUILD_NUMBER;
+      docker push jackyruslymoonlay/com-danliris-service-auth-webapi:v1.0.0.$TRAVIS_BUILD_NUMBER;
 
       docker tag com-danliris-service-auth-webapi:test jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.latest;
-      docker push jrmoonlay/com-danliris-service-auth-webapi:v1.0.0.latest;
+      docker push jackyruslymoonlay/com-danliris-service-auth-webapi:v1.0.0.latest;
       fi
