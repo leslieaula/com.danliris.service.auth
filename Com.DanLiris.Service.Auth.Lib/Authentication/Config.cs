@@ -41,8 +41,8 @@ namespace Com.DanLiris.Service.Auth.Lib.Authentication
                         new Secret(Secret.Sha256())
                     },
                     AllowedScopes = { "com.danliris.service" },
-                    AccessTokenLifetime = 3600 * 24 * 30,
-                    IdentityTokenLifetime = 3600 * 24 * 30
+                    AccessTokenLifetime = 3600 * 24 * 10,
+                    IdentityTokenLifetime = 3600 * 24 * 10
                 }
             };
         }

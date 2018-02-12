@@ -85,7 +85,7 @@ namespace Com.DanLiris.Service.Auth.WebApi
 
             services.AddCors(o => o.AddPolicy("AuthPolicy", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder.WithOrigins("http://localhost:9000")
                        .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                        .AllowAnyHeader();
             }));
