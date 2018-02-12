@@ -35,6 +35,8 @@ namespace Com.DanLiris.Service.Auth.Test.Controllers.Authenticate
         public async Task Should_Success_Login()
         {
             TestUser testUser = Config.GetTestUsers().First();
+            testUser.Password = "Test";
+
             var response = await Client.PostAsync(AUTH_URI, new StringContent(JsonConvert.SerializeObject(testUser).ToString(), Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode();
 
