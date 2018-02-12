@@ -14,6 +14,7 @@ using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
 using Com.DanLiris.Service.Auth.Lib.Interfaces;
+using IdentityServer4.Models;
 
 namespace Com.DanLiris.Service.Auth.Lib.Services
 {
@@ -27,23 +28,34 @@ namespace Com.DanLiris.Service.Auth.Lib.Services
 
         public async Task<string> Authenticate(string Username, string Password)
         {
-            var disco = await DiscoveryClient.GetAsync(Config.Authority);
-            if (disco.IsError)
+            if (string.IsNullOrWhiteSpace(Username))
             {
-                throw new Exception(disco.Error);
+                throw new Exception("Username is required");
             }
-
-            var tokenClient = new TokenClient(disco.TokenEndpoint, Config.ClientId, Config.Secret);
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(Username, Password, "com.danliris.service");
-
-            if (tokenResponse.IsError)
+            else if(string.IsNullOrWhiteSpace(Password))
             {
-                throw new Exception(tokenResponse.ErrorDescription);
+                throw new Exception("Password is required");
             }
+            else
+            {
+                var disco = await DiscoveryClient.GetAsync(Config.Authority);
+                if (disco.IsError)
+                {
+                    throw new Exception(disco.Error);
+                }
 
-            Dictionary<string, object> response = JsonConvert.DeserializeObject<Dictionary<string, object>>(tokenResponse.Json.ToString());
-            string token = response["access_token"].ToString();
-            return token;
+                var tokenClient = new TokenClient(disco.TokenEndpoint, Config.ClientId, Config.Secret);
+                var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(Username, Password.Sha256(), "com.danliris.service");
+
+                if (tokenResponse.IsError)
+                {
+                    throw new Exception(tokenResponse.ErrorDescription);
+                }
+
+                Dictionary<string, object> response = JsonConvert.DeserializeObject<Dictionary<string, object>>(tokenResponse.Json.ToString());
+                string token = response["access_token"].ToString();
+                return token;
+            }    
         }
 
         public override Tuple<List<Account>, int, Dictionary<string, string>, List<string>> ReadData(int Page = 1, int Size = 25, string Order = "{}", List<string> Select = null, string Keyword = null)
@@ -280,6 +292,7 @@ namespace Com.DanLiris.Service.Auth.Lib.Services
             base.OnCreating(model);
             model._CreatedAgent = "Service";
             model._CreatedBy = this.Username;
+            model.Password = model.Password.Sha256();
         }
 
         public override void OnUpdating(int id, Account model)
@@ -287,6 +300,7 @@ namespace Com.DanLiris.Service.Auth.Lib.Services
             base.OnUpdating(id, model);
             model._LastModifiedAgent = "Service";
             model._LastModifiedBy = this.Username;
+            model.Password = model.Password.Sha256();
         }
 
         public override void OnDeleting(Account model)

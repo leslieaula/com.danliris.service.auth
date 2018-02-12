@@ -37,9 +37,9 @@ namespace Com.DanLiris.Service.Auth.WebApi.Controllers.v1
             catch (Exception ex)
             {
                 Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, ex.ToString())
+                    new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, ex.Message)
                     .Fail();
-
+                
                 return BadRequest(Result);
             }
         }
