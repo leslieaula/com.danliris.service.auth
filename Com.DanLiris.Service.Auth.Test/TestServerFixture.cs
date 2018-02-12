@@ -67,6 +67,8 @@ namespace Com.DanLiris.Service.Auth.Test
 
             /* Get Token */
             TestUser testUser = Config.GetTestUsers().First();
+            testUser.Password = "Test";
+
             var response = Client.PostAsync("v1/authenticate", new StringContent(JsonConvert.SerializeObject(testUser).ToString(), Encoding.UTF8, "application/json")).Result;
             response.EnsureSuccessStatusCode();
 

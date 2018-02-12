@@ -55,7 +55,7 @@ namespace Com.DanLiris.Service.Auth.Lib.Authentication
                 {
                     SubjectId = "Test",
                     Username = "Test",
-                    Password = "Test",
+                    Password = "Test".Sha256(),
                     Claims = new List<Claim>
                     {
                         new Claim("name", "Test"),
