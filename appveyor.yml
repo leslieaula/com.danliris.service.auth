@@ -1,16 +1,7 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 init:
-- cmd: >-
-    docker build -f Dockerfile.test.build -t com-danliris-service-auth-webapi:test-build .
-
-    docker create --name com-danliris-service-auth-webapi-test-build com-danliris-service-auth-webapi:test-build
-
-    mkdir bin
-
-    docker cp com-danliris-service-auth-webapi-test-build:/out/. ./bin/publish
-
-    docker build -f Dockerfile.test -t com-danliris-service-auth-webapi:test .
+- ps: Dockerfile.test.build.bat
 before_build:
 - cmd: >-
     docker-compose -f docker-compose.test.yml up -d
