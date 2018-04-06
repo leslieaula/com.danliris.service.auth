@@ -1,9 +1,9 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 init:
-- ps: Dockerfile.test.build.bat
+- pwsh: Dockerfile.test.build.bat
 before_build:
-- cmd: >-
+- pwsh: >-
     docker-compose -f docker-compose.test.yml up -d
 
     timeout 60
