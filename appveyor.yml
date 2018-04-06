@@ -3,7 +3,7 @@ image: Visual Studio 2017
 init:
 - pwsh: sh Dockerfile.test.build.sh
 before_build:
-- ps: >-
+- pwsh: >-
     docker-compose -f docker-compose.test.yml up -d
 
     timeout 60
